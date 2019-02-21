@@ -1,6 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
+defined('YII_ENV') or define('YII_ENV', 'dev');
+// If user is not logged in it should redirect to login page
+if(Yii::$app->user->getIsGuest()){
+    Yii::$app->response->redirect(['site/login']);
+}
 
 $this->title = 'Arbel';
 ?>
