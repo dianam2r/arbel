@@ -20,7 +20,7 @@ use Yii;
  * @property string $password
  * @property string $created_at
  * @property string $updated_at
- *
+ * Borrar esta parte *************************************
  * @property Status[] $statuses
  * @property Status[] $statuses0
  * @property Tasks[] $tasks
@@ -136,6 +136,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->password === hash('sha512',$password);
     }
+ 
+    // A PARTIR DE AQUI SE PUEDE BORRAR (?)
 
     /**
      * @return \yii\db\ActiveQuery

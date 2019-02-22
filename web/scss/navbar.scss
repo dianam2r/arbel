@@ -1,0 +1,36 @@
+.navbar-inverse {
+    background-color: #007b8f;
+    border-color: #017d92;
+
+    .navbar-brand {
+        color: #92d1db;
+    }
+
+    .navbar-text {
+        color: #92d1db;
+    }
+
+    .navbar-nav > li > a {
+        color: #92d1db;
+    }
+
+    .navbar-nav > .active > a,
+    .navbar-nav > .active > a:hover,
+    .navbar-nav > .active > a:focus {
+        color: #fff;
+        background-color: #ffa440;
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-inverse {
+        .navbar-toggle {
+        border-color: transparent;
+        }
+
+        .navbar-toggle:hover,
+        .navbar-toggle:focus {
+            background-color: #d95119;
+        }
+    }
+}

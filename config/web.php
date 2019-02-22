@@ -1,6 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
+$db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
@@ -38,13 +39,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=arbel',
-            'username' => 'arbel_admin',
-            'password' => 'arbel_admin',
-            'charset' => 'utf8',
-        ],
+        'db' => $db,
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => false,

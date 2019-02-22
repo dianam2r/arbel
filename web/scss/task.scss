@@ -1,0 +1,31 @@
+.task-wrapper {
+    border-radius: 15px;
+    background: #d6c8b3;
+    padding: 20px;
+    margin-bottom: 5px; 
+    width: 200px;
+    height: auto;
+
+    .task-title {
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .task-description {
+        text-align: justify;
+    }
+
+    span {
+        display: block;
+
+        &:not(:last-child) {
+            margin-bottom: 3px;
+        }
+    }
+}
+
+.btn-task {
+    border-radius: 5px 20px;
+    padding: 0.7rem 2rem;
+    transform: translate(9rem, -4.5rem);
+}
