@@ -4,4 +4,8 @@ $(function(){
             .find('#modelContent')
             .load($(this).attr('value'));
     });
+
+    $('#listTask').click(function(){
+        window.location = "index.php?r=task/list";
+    });
 });

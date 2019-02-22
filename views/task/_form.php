@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['action' => ['task/save'],'options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -28,14 +28,11 @@ use yii\widgets\ActiveForm;
             2 => 'In Progress',
             3 => 'Completed',
             4 => 'Archived'
-        ], 
-        [
-            'prompt'=> ''
         ]
     ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['id' => 'createTask', 'class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['id' => 'saveTask', 'class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

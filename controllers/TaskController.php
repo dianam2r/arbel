@@ -36,14 +36,6 @@ class TaskController extends Controller
      */
     public static function actionIndex()
     {
-        /*$searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);*/
-
         //Init curl
         $curl = new curl\Curl();
 
@@ -77,12 +69,53 @@ class TaskController extends Controller
         $userList = UserController::listUsers();
         Yii::$app->view->params['userList'] = $userList;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
         return $this->renderAjax('create', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionSave()
+    {
+        $model = new Task();
+        $searchModel = new TaskSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'title' => $model['title'],
+                    'description' => $model['description'],
+                    'estimated_points' => $model['estimated_points'],
+                    'assigned_to' => $model['assigned_to'],
+                    'status_id' => $model['status_id'],
+                    'created_by' => Yii::$app->user->id,
+                    'updated_by' => Yii::$app->user->id
+                ]))
+                ->post(Yii::$app->params['createTask']);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+    }
+
+    /* 
+     * Renders to a view with a grid of tasks
+     */
+    public function actionList()
+    {
+        $model = new Task();
+        $searchModel = new TaskSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
