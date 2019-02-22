@@ -63,6 +63,7 @@ $this->title = 'Arbel';
                 <h2>Tasks</h2>
                 
                 <?= Html::button('Add a task', ['id' => 'createTask', 'value' => Url::to(['task/create']), 'class' => 'btn btn-warning btn-task']) ?>
+                <?= Html::button('List tasks', ['id' => 'listTask', 'value' => Url::to(['task/list']), 'class' => 'btn btn-info btn-list-task']) ?>
                 
                 <?= $this->render('../layouts/modal') ?>
 

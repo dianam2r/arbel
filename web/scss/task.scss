@@ -24,8 +24,17 @@
     }
 }
 
-.btn-task {
+.btn-task,
+.btn-list-task {
     border-radius: 5px 20px;
+}
+
+.btn-task {
     padding: 0.7rem 2rem;
     transform: translate(9rem, -4.5rem);
+}
+
+.btn-list-task {
+    padding: 0.7rem 2.4rem;
+    transform: translate(-23px, -4px);
 }
