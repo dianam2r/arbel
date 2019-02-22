@@ -61,7 +61,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // Get list of tasks to display
+        $records = TaskController::actionIndex();
+        return $this->render('index', ['records' => $records]);
     }
 
     /**

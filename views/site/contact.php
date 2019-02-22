@@ -10,6 +10,10 @@ use yii\captcha\Captcha;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
+
+if(Yii::$app->user->getIsGuest()){
+    Yii::$app->response->redirect(['site/login']);
+}
 ?>
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>

@@ -1,0 +1,32 @@
+{
+  "name": "arbel",
+  "version": "1.0.0",
+  "description": "This is a basic Yii project to simulate a dashboard",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dianam2r/arbel.git"
+  },
+  "author": "Diana Mendoza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dianam2r/arbel/issues"
+  },
+  "homepage": "https://github.com/dianam2r/arbel#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.4.8",
+    "browser-sync": "^2.26.3",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
+  }
+}
