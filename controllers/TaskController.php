@@ -167,9 +167,21 @@ class TaskController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        //Init curl
+        $curl = new curl\Curl();
 
-        return $this->redirect(['index']);
+        // POST request to api
+        if($model && Yii::$app->request->post()) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id
+                ]))
+                ->post(Yii::$app->params['deleteTask']);
+
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        };
     }
 
     /**
