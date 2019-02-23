@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -10,7 +11,11 @@ use yii\widgets\ActiveForm;
 
 <div class="task-form">
 
-    <?php $form = ActiveForm::begin(['action' => ['task/save'],'options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php if(isset($this->params['userList'])): ?>
+        <?php $form = ActiveForm::begin(['action' => ['task/save'],'options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php else: ?>
+        <?php $form = ActiveForm::begin(['action' => Url::to('index.php?r=task%2Fupdate&id='.Yii::$app->getRequest()->getQueryParam('id')),'options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php endif; ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -20,8 +25,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'attached_file')->fileInput() ?>
 
-    <?= $form->field($model, 'assigned_to')->dropdownList($this->params['userList'], ['prompt'=>'']) ?>
-
+    <?php if(isset($this->params['userList'])): ?>
+        <?= $form->field($model, 'assigned_to')->dropdownList($this->params['userList'], ['prompt'=>'']) ?>
+    <?php else: ?>
+        <?= $form->field($model, 'assigned_to')->dropdownList($this->params['users'], ['prompt'=>'']) ?>
+    <?php endif; ?>
+    
     <?= $form->field($model, 'status_id')->dropdownList(
         [
             1 => 'Open',

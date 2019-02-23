@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Task', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Create Task', ['id' => 'createTask', 'value' => Url::to(['task/create']), 'class' => 'btn btn-primary btn-create-task']) ?>
+        <?= $this->render('../layouts/modal') ?>
     </p>
 
     <?= GridView::widget([
@@ -29,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description',
             'estimated_points',
-            'attached_file',
-            //'assigned_to',
-            //'status_id',
+            //'attached_file',
+            'assigned_to',
+            'status_id',
             //'created_at',
             //'updated_at',
             //'created_by',

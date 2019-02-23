@@ -129,8 +129,27 @@ class TaskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $users = UserController::listUsers();
+        Yii::$app->view->params['users'] = $users;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id,
+                    'title' => $model['title'],
+                    'description' => $model['description'],
+                    'estimated_points' => $model['estimated_points'],
+                    'attached_file' => $model['attached_file'],
+                    'assigned_to' => $model['assigned_to'],
+                    'status_id' => $model['status_id'],
+                    'updated_by' => Yii::$app->user->id
+                ]))
+                ->post(Yii::$app->params['editTask']);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
