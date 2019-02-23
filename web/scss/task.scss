@@ -1,14 +1,26 @@
+.task-tools {
+    transform: translate(20rem, 3.5rem);
+    a {
+        margin: 0 5px;
+        .gliphicon {
+            color: red;
+        }
+    }
+}
+
 .task-wrapper {
     border-radius: 15px;
     background: #d6c8b3;
     padding: 20px;
+    padding-top: 40px;
     margin-bottom: 5px; 
-    width: 200px;
+    width: 300px;
     height: auto;
 
     .task-title {
-        font-weight: 500;
+        font-weight: 600;
         text-align: center;
+        padding-bottom: 10px;
     }
 
     .task-description {
@@ -38,9 +50,9 @@
 
 .btn-list-task {
     padding: 0.7rem 2.4rem;
-    transform: translate(-23px, -4px);
+    transform: translate(78px, -4px);
 }
 
 .btn-task {
-    transform: translate(9rem, -4.5rem);
+    transform: translate(19rem, -4.5rem);
 }

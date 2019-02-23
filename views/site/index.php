@@ -69,6 +69,11 @@ $this->title = 'Arbel';
 
                 <?php foreach($records as $tasks): ?>
                     <?php foreach($tasks as $task): ?>
+                        <div class="task-tools">
+                            <a href="<?= Url::to('index.php?r=task%2Fview&id='.$task['id']) ?>"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="<?= Url::to('index.php?r=task%2Fupdate&id='.$task['id']) ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="<?= Url::to('index.php?r=task%2Fdelete&id='.$task['id']) ?>"><span class="glyphicon glyphicon-trash"></span></a>
+                        </div>
                         <div class="task-wrapper">
                             <span class="task-title"><?= $task['title'] ?></span>
                             <span class="task-description"><?= $task['description'] ?></span>
