@@ -6,6 +6,6 @@ $(function(){
     });
 
     $('#listTask').click(function(){
-        window.location = "index.php?r=task/list";
+        window.location = "index.php?r=task%2Flist";
     });
 });
