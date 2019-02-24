@@ -12,19 +12,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'last_name')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'group_id')->textInput() ?>
+    <?= $form->field($model, 'group_id')->dropdownList(
+        [
+            1 => 'Team A',
+            2 => 'Team B',
+            3 => 'Team C',
+            4 => 'Team D'
+        ]
+    ) ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'readonly' => $this->params['editing'] ? true : false]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

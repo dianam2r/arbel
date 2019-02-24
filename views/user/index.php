@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -21,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php // Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Create User', ['id' => 'createUser', 'value' => Url::to(['create']), 'class' => 'btn btn-primary btn-create-user']) ?>
+        <?= $this->render('../layouts/modal') ?>
     </p>
 
     <?= GridView::widget([

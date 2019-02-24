@@ -36,10 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'attached_file',
             'assigned_to',
             'status_id',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            //'created_at',
+            //'updated_at',
+            //'created_by',
+            //'updated_by',
         ],
     ]) ?>
 

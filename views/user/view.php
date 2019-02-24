@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'last_name:ntext',
             'group_id',
             'username',
-            'password',
+            //'password',
             'created_at',
-            'updated_at',
+            //'updated_at',
         ],
     ]) ?>
 

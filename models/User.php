@@ -63,7 +63,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'name' => 'Name',
             'last_name' => 'Last Name',
-            'group_id' => 'Group ID',
+            'group_id' => 'Team',
             'username' => 'Username',
             'password' => 'Password',
             'created_at' => 'Created At',

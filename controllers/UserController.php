@@ -66,12 +66,32 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        Yii::$app->view->params['editing'] = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'name' => $model['name'],
+                    'last_name' => $model['last_name'],
+                    'group_id' => $model['group_id'],
+                    'username' => $model['username'],
+                    'password' => $model['password']
+                ]))
+                ->post(Yii::$app->params['createUser']);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -86,8 +106,23 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        Yii::$app->view->params['editing'] = true;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //Init curl
+        $curl = new curl\Curl();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id,
+                    'name' => $model['name'],
+                    'last_name' => $model['last_name'],
+                    'group_id' => $model['group_id'],
+                    'username' => $model['username'],
+                    //'password' => $model['password']
+                ]))
+                ->post(Yii::$app->params['updateUser']);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -105,9 +140,22 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if($model && Yii::$app->request->post()) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id
+                ]))
+                ->post(Yii::$app->params['deleteUser']);
+
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        };
+        //return $this->redirect(['index']);
     }
 
     /**
