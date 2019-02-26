@@ -9,6 +9,7 @@ use app\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -53,8 +54,30 @@ class TaskController extends Controller
      */
     public function actionView($id)
     {
+        //Init curl
+        $curl = new curl\Curl();
+
+        // GET request to api
+        $response = $curl->get(Yii::$app->params['showTask'] . '?id=' . $id);
+
+        $record = json_decode($response, true);
+
+        $model = new Task([
+            'id' => $record['id'],
+            'title' => $record['title'],
+            'description' => $record['description'],
+            'estimated_points' => $record['estimated_points'],
+            'attached_file' => $record['attached_file'],
+            'assigned_to' => $record['assigned_to'],
+            'status_id' => $record['task_status'],
+            'created_at' => $record['created_at'],
+            'created_by' => $record['created_by'],
+            'updated_at' => $record['updated_at'],
+            'updated_by' => $record['updated_by']
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -97,10 +120,11 @@ class TaskController extends Controller
                 ]))
                 ->post(Yii::$app->params['createTask']);
 
-            return $this->render('index', [
+            /*return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-            ]);
+            ]);*/
+            $this->redirect(Yii::$app->urlManager->createUrl('task/list'));
         }
     }
 
@@ -110,11 +134,46 @@ class TaskController extends Controller
     public function actionList()
     {
         $model = new Task();
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $keywords = "";
+        $results = [];
 
+        //Init curl
+        $curl = new curl\Curl();
+
+        if ($model->load(Yii::$app->request->get())) {
+            foreach ($model as $attribute) {
+                if ($attribute) {
+                    // Replace space for separation caracter in case there's more than one word
+                    // in the attribute searched
+                    $keywords .= str_replace(' ', '|', $attribute) . '|';
+                }
+            }
+        }
+        
+        $keywords = rtrim($keywords,'|');
+
+        // GET request to api
+        $response = $curl->get(Yii::$app->params['searchTask'] . '?keyword=' . $keywords);
+        $records = json_decode($response, true);
+
+        foreach($records as $tasks){
+            foreach($tasks as $task){
+                $results[] = $task;
+            }
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $results,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'attributes' => ['id', 'title', 'description','estimated_points','assigned_to', 'task_status'],
+            ],
+        ]);
+        
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -198,5 +257,14 @@ class TaskController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionSearch()
+    {
+        $model = new Task(['scenario' => Task::SCENARIO_SEARCH]);
+
+        return $this->renderAjax('search', [
+            'model' => $model,
+        ]);
     }
 }

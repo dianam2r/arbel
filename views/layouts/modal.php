@@ -3,8 +3,8 @@
 use yii\bootstrap\Modal;
 
 Modal::begin([
-    'header' => '<h4>New Task</h4>',
-    'id'     => 'modelTask',
+    'header' => '<h4>Add a new element</h4>',
+    'id'     => 'model',
     'size'   => 'model-lg',
 ]);
 

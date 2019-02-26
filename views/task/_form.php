@@ -12,9 +12,9 @@ use yii\widgets\ActiveForm;
 <div class="task-form">
 
     <?php if(isset($this->params['userList'])): ?>
-        <?php $form = ActiveForm::begin(['action' => ['task/save'],'options' => ['enctype' => 'multipart/form-data']]); ?>
+        <?php $form = ActiveForm::begin(['action' => ['task/save'],'method' => 'post']); ?>
     <?php else: ?>
-        <?php $form = ActiveForm::begin(['action' => Url::to('index.php?r=task%2Fupdate&id='.Yii::$app->getRequest()->getQueryParam('id')),'options' => ['enctype' => 'multipart/form-data']]); ?>
+        <?php $form = ActiveForm::begin(['action' => Url::to('index.php?r=task%2Fupdate&id='.Yii::$app->getRequest()->getQueryParam('id')),'method' => 'post']); ?>
     <?php endif; ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'estimated_points')->textInput(['type' => 'number']) ?>
 
-    <?= $form->field($model, 'attached_file')->fileInput() ?>
+    <?php // echo $form->field($model, 'attached_file')->fileInput() ?>
 
     <?php if(isset($this->params['userList'])): ?>
         <?= $form->field($model, 'assigned_to')->dropdownList($this->params['userList'], ['prompt'=>'']) ?>
@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
     ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['id' => 'saveTask', 'class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['id' => 'saveTask', 'class' => 'btn btn-success btn-round']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

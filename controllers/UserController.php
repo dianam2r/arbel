@@ -9,6 +9,7 @@ use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -36,11 +37,51 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new User();
+        $keywords = "";
+        $results = [];
 
+        //Init curl
+        $curl = new curl\Curl();
+
+        if ($model->load(Yii::$app->request->get())) {
+            foreach ($model as $attribute) {
+                if ($attribute) {
+                    // Replace space for separation caracter in case there's more than one word
+                    // in the attribute searched
+                    $keywords .= str_replace(' ', '|', $attribute) . '|';
+                }
+            }
+        }
+        
+        $keywords = rtrim($keywords,'|');
+
+/*echo '<pre>';
+echo Yii::$app->params['searchUser'] . '?keyword=' . $keywords;
+die();*/
+
+        // GET request to api
+        $response = $curl->get(Yii::$app->params['searchUser'] . '?keyword=' . $keywords);
+        $records = json_decode($response, true);
+
+        foreach($records as $users){
+            foreach($users as $user){
+                $results[] = $user;
+            }
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $results,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'attributes' => ['id', 'name', 'last_name','team_name','username'],
+            ],
+        ]);
+        
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -53,8 +94,27 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+
+         //Init curl
+         $curl = new curl\Curl();
+ 
+         // GET request to api
+         $response = $curl->get(Yii::$app->params['showUser'] . '?id=' . $id);
+ 
+         $record = json_decode($response, true);
+ 
+         $model = new User([
+             'id' => $record['id'],
+             'name' => $record['name'],
+             'last_name' => $record['last_name'],
+             'group_id' => $record['team'],
+             'username' => $record['username'],
+             'created_at' => $record['created_at'],
+             'updated_at' => $record['updated_at'],
+         ]);
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -66,12 +126,32 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        Yii::$app->view->params['editing'] = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'name' => $model['name'],
+                    'last_name' => $model['last_name'],
+                    'group_id' => $model['group_id'],
+                    'username' => $model['username'],
+                    'password' => $model['password']
+                ]))
+                ->post(Yii::$app->params['createUser']);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -86,8 +166,23 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        Yii::$app->view->params['editing'] = true;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //Init curl
+        $curl = new curl\Curl();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id,
+                    'name' => $model['name'],
+                    'last_name' => $model['last_name'],
+                    'group_id' => $model['group_id'],
+                    'username' => $model['username'],
+                    //'password' => $model['password']
+                ]))
+                ->post(Yii::$app->params['updateUser']);
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -105,9 +200,22 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        //Init curl
+        $curl = new curl\Curl();
+
+        // POST request to api
+        if($model && Yii::$app->request->post()) {
+            $response = $curl->setRawPostData(
+                json_encode([
+                    'id' => $id
+                ]))
+                ->post(Yii::$app->params['deleteUser']);
+
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        };
+        //return $this->redirect(['index']);
     }
 
     /**
@@ -146,5 +254,14 @@ class UserController extends Controller
         }
 
         return $list;
+    }
+
+    public function actionSearch()
+    {
+        $model = new User(['scenario' => User::SCENARIO_SEARCH]);
+
+        return $this->renderAjax('search', [
+            'model' => $model,
+        ]);
     }
 }
