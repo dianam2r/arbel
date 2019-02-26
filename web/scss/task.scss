@@ -2,8 +2,14 @@
     transform: translate(20rem, 3.5rem);
     a {
         margin: 0 5px;
-        .gliphicon {
-            color: red;
+        color: rgba(93, 91, 91, .24);
+        
+        &:hover {
+            color: rgba(93, 91, 91, 1);
+        }
+
+        &:visited {
+            color: rgba(93, 91, 91, .24);
         }
     }
 }
@@ -38,7 +44,8 @@
 
 .btn-task,
 .btn-list-task,
-.btn-create-task {
+.btn-create-task,
+.btn-round {
     border-radius: 5px 20px;
 }
 
@@ -48,11 +55,21 @@
 
 }
 
-.btn-list-task {
-    padding: 0.7rem 2.4rem;
-    transform: translate(78px, -4px);
+.jumbotron {
+    .btn {
+        padding: 0.7rem 2.4rem;
+    }
 }
 
-.btn-task {
-    transform: translate(19rem, -4.5rem);
+.tb-space {
+    margin-bottom: 2.6rem;
+}
+
+.edit-tools {
+    margin: 2rem 0;
+
+    .edit-option {
+        display: inline;
+        margin: 0 0.5rem;
+    }
 }

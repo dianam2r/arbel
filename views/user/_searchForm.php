@@ -8,13 +8,13 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-search">
+<div class="user-form">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
+    
     <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'name') ?>
@@ -32,8 +32,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary btn-round']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default btn-round']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

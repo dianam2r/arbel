@@ -31,6 +31,9 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    const SCENARIO_SEARCH = 'search';
+
     /**
      * {@inheritdoc}
      */
@@ -52,6 +55,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['username'], 'string', 'max' => 30],
             [['password'], 'string', 'max' => 300],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_SEARCH] = [];
+        return $scenarios;
     }
 
     /**

@@ -26,6 +26,9 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+    
+    const SCENARIO_SEARCH = 'search';
+
     /**
      * {@inheritdoc}
      */
@@ -40,9 +43,9 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status_id', 'created_by', 'updated_by'], 'required'],
+            [['title', 'description', 'assigned_to', 'estimated_points', 'status_id'], 'required'],
             [['estimated_points', 'assigned_to', 'status_id', 'created_by', 'updated_by'], 'integer'],
-            [['attached_file'], 'file','skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf'],
+            //[['attached_file'], 'file','skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 150],
             [['description'], 'string', 'max' => 500],
@@ -52,6 +55,13 @@ class Task extends \yii\db\ActiveRecord
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::className(), 'targetAttribute' => ['status_id' => 'id']],
             [['estimated_points'], 'startValue'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_SEARCH] = [];
+        return $scenarios;
     }
 
     /**
@@ -64,7 +74,7 @@ class Task extends \yii\db\ActiveRecord
             'title' => 'Title',
             'description' => 'Description',
             'estimated_points' => 'Estimated Points',
-            'attached_file' => 'Attached File',
+            //'attached_file' => 'Attached File',
             'assigned_to' => 'Assigned To',
             'status_id' => 'Status',
             'created_at' => 'Created At',

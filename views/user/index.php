@@ -21,22 +21,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php // Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Create User', ['id' => 'createUser', 'value' => Url::to(['create']), 'class' => 'btn btn-primary btn-create-user']) ?>
-        <?= $this->render('../layouts/modal') ?>
-    </p>
+    <div class="edit-tools">
+        <div class="edit-option">
+            <?= Html::button('Create User', ['id' => 'createUser', 'value' => Url::to(['create']), 'class' => 'btn btn-primary btn-create-user']) ?>
+            <?= $this->render('../layouts/modal') ?>
+        </div>
+        <div class="edit-option">
+            <?= Html::button('Search User', ['id' => 'searchUser', 'value' => Url::to(['search']), 'class' => 'btn btn-secondary btn-round']) ?>
+            <?= $this->render('../layouts/searchModal') ?>
+        </div>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name:ntext',
             'last_name:ntext',
-            'group_id',
+            'team_name',
             'username',
             //'password',
             //'created_at',

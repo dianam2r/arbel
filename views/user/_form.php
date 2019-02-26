@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'readonly' => $this->params['editing'] ? true : false]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success btn-round']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

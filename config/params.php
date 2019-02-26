@@ -7,8 +7,11 @@ return [
     'deleteTask' => $_SERVER['HTTP_HOST'] . '/arbel_api/task/delete.php',
     'listTasks' => $_SERVER['HTTP_HOST'] . '/arbel_api/task/read.php',
     'showTask' => $_SERVER['HTTP_HOST'] . '/arbel_api/task/read_one.php',
+    'searchTask' => $_SERVER['HTTP_HOST'] . '/arbel_api/task/search.php',
     'listUsers' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/read.php',
     'createUser' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/create.php',
     'updateUser' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/update.php',
     'deleteUser' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/delete.php',
+    'showUser' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/read_one.php',
+    'searchUser' => $_SERVER['HTTP_HOST'] . '/arbel_api/user/search.php',
 ];

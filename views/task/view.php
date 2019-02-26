@@ -16,16 +16,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-round']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-danger btn-round',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
-
+<? // php var_dump($model); die();?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description',
             'estimated_points',
-            'attached_file',
+            //'attached_file',
             'assigned_to',
             'status_id',
-            //'created_at',
+            'created_at',
             //'updated_at',
-            //'created_by',
+            'created_by',
             //'updated_by',
         ],
     ]) ?>

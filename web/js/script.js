@@ -14,4 +14,16 @@ $(function(){
             .find('#modelContent')
             .load($(this).attr('value'));
     });
+
+    $('#searchUser').click(function(){
+        $('#searchModel').modal('show')
+            .find('#searchModelContent')
+            .load($(this).attr('value'));
+    });
+
+    $('#searchTask').click(function(){
+        $('#searchModel').modal('show')
+            .find('#searchModelContent')
+            .load($(this).attr('value'));
+    });
 });

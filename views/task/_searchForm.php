@@ -8,10 +8,10 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="task-search">
+<div class="task-form">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['list'],
         'method' => 'get',
     ]); ?>
 
@@ -23,11 +23,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'estimated_points') ?>
 
-    <?= $form->field($model, 'attached_file') ?>
+    <?php // echo $form->field($model, 'attached_file') ?>
 
-    <?php // echo $form->field($model, 'assigned_to') ?>
+    <?= $form->field($model, 'assigned_to') ?>
 
-    <?php // echo $form->field($model, 'status_id') ?>
+    <?= $form->field($model, 'status_id') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
@@ -38,8 +38,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary btn-round']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default btn-round']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

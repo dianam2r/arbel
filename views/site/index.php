@@ -18,17 +18,18 @@ $this->title = 'Arbel';
     <div class="jumbotron">
         <h1>General Dashboard</h1>
         <p class="lead">You can have a broad view of your tasks here</p>
+        <p>
+            <?= Html::button('Add a task', ['id' => 'createTask', 'value' => Url::to(['task/create']), 'class' => 'btn btn-warning btn-task']) ?>
+            <?= Html::button('List tasks', ['id' => 'listTask', 'value' => Url::to(['task/list']), 'class' => 'btn btn-info btn-list-task']) ?>
+        </p>
     </div>
+
+    <?= $this->render('../layouts/modal') ?>
 
     <div class="body-content">
         <div class="row">
             <div class="col-lg-4">
-                <h2>Tasks</h2>
-                
-                <?= Html::button('Add a task', ['id' => 'createTask', 'value' => Url::to(['task/create']), 'class' => 'btn btn-warning btn-task']) ?>
-                <?= Html::button('List tasks', ['id' => 'listTask', 'value' => Url::to(['task/list']), 'class' => 'btn btn-info btn-list-task']) ?>
-                
-                <?= $this->render('../layouts/modal') ?>
+                <h2 class="tb-space">Open</h2>
 
                 <?php foreach($records as $tasks): ?>
                     <?php foreach($tasks as $task): ?>
@@ -51,7 +52,7 @@ $this->title = 'Arbel';
             </div>
 
             <div class="col-lg-4">
-                <h2>In Progress</h2>
+                <h2 class="tb-space">In Progress</h2>
 
                 <?php foreach($records as $tasks): ?>
                     <?php foreach($tasks as $task): ?>
@@ -74,7 +75,7 @@ $this->title = 'Arbel';
             </div>
 
             <div class="col-lg-4">
-                <h2>Completed</h2>
+                <h2 class="tb-space">Completed</h2>
 
                 <?php foreach($records as $tasks): ?>
                     <?php foreach($tasks as $task): ?>
