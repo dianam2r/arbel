@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textArea(['maxlength' => true, 'rows' => 3]) ?>
 
-    <?= $form->field($model, 'estimated_points')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'estimated_points')->textInput(['type' => 'number', 'min' => "0"]) ?>
 
     <?php // echo $form->field($model, 'attached_file')->fileInput() ?>
 

@@ -5,7 +5,6 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 // If user is not logged in it should redirect to login page
@@ -19,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="edit-tools">
         <div class="edit-option">
@@ -32,22 +30,34 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?php if(isset($this->params['resultData'])): ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name:ntext',
-            'last_name:ntext',
-            'team_name',
-            'username',
-            //'password',
-            //'created_at',
-            //'updated_at',
+                'id',
+                'name:ntext',
+                'last_name:ntext',
+                'team_name',
+                'username',
+                //'password',
+                //'created_at',
+                //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    <?php else: ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                [
+                    'value' => function($data) {
+                        return $data;
+                    },
+                ]
+            ],
+        ]); ?>
+    <?php endif; ?>
 </div>

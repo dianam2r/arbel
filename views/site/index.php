@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-defined('YII_ENV') or define('YII_ENV', 'dev');
+// defined('YII_ENV') or define('YII_ENV', 'dev');
 
 use yii\helpers\Html;
 use yii\helpers\Url;

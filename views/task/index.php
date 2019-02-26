@@ -5,7 +5,6 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Tasks';
@@ -14,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="task-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="edit-tools">
         <div class="edit-option">
@@ -27,25 +25,37 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?php if(isset($this->params['resultData'])): ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
-            'description',
-            'estimated_points',
-            //'attached_file',
-            'assigned_to',
-            'task_status',
-            //'created_at',
-            //'updated_at',
-            //'created_by',
-            //'updated_by',
+                'id',
+                'title',
+                'description',
+                'estimated_points',
+                //'attached_file',
+                'assigned_to',
+                'task_status',
+                //'created_at',
+                //'updated_at',
+                //'created_by',
+                //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    <?php else: ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                [
+                    'value' => function($data) {
+                        return $data;
+                    },
+                ]
+            ],
+        ]); ?>
+    <?php endif; ?>
 </div>

@@ -20,7 +20,7 @@ use Yii;
  * @property string $password
  * @property string $created_at
  * @property string $updated_at
- * Borrar esta parte *************************************
+ * 
  * @property Status[] $statuses
  * @property Status[] $statuses0
  * @property Tasks[] $tasks

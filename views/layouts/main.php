@@ -10,6 +10,11 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+// This is just to hide the debug bar tool from view.
+if (class_exists('yii\debug\Module')) {
+    $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+}
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -41,7 +46,6 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Tasks', 'url' => ['/site/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

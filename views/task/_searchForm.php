@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TaskSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,13 +14,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php // echo $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'estimated_points') ?>
+    <?= $form->field($model, 'estimated_points')->textInput(['type' => 'number', 'min' => "0"]) ?>
 
     <?php // echo $form->field($model, 'attached_file') ?>
 

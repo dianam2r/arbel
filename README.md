@@ -25,10 +25,10 @@ DIRECTORY STRUCTURE
 REQUIREMENTS
 ------------
 
-The minimum requirement by this project template is that your Web server supports PHP 5.4.0.
+The minimum requirement by this project template is that your Web server supports PHP 5.4.0. The recomended version is 7.1
 You may also need a basic Apache + MySQL setup.
 For advanced mac users we recommend that you follow this setup (part 1 and 2).
-<a href="">Homebrew + Apache + MySQL</a>
+<a href="https://getgrav.org/blog/macos-mojave-apache-multiple-php-versions">Homebrew + Apache + MySQL</a>
 For an easy experience you alternatively may use MAMP or XAMP, depending on your operative system.
 
 
@@ -41,7 +41,7 @@ Clone this repository or download de .zip file into your web root directory.
 git clone git@github.com:dianam2r/arbel.git
 ~~~
 
-Set cookie validation key in `config/web.php` file to some random secret string:
+Set cookie validation key in `config/web.php` file to some random secret string (there's one within installation but you may change it if you want to) :
 
 ```php
 'request' => [
@@ -49,12 +49,6 @@ Set cookie validation key in `config/web.php` file to some random secret string:
     'cookieValidationKey' => '<secret random string goes here>',
 ],
 ```
-
-You can then access the application through the following URL:
-
-~~~
-http://localhost/arbel/web/
-~~~
 
 ADDITIONAL CONFIGURATIONS
 -------------
@@ -65,3 +59,15 @@ ADDITIONAL CONFIGURATIONS
 ~~~
 git clone git@github.com:dianam2r/arbel_api.git
 ~~~
+
+You can then access the application through the following URL:
+
+~~~
+http://localhost/arbel/web/
+~~~
+
+To enter development mode, open a terminal and within the application directory type this command
+
+```
+php yii serve
+```
