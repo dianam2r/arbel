@@ -120,10 +120,6 @@ class TaskController extends Controller
                 ]))
                 ->post(Yii::$app->params['createTask']);
 
-            /*return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);*/
             $this->redirect(Yii::$app->urlManager->createUrl('task/list'));
         }
     }

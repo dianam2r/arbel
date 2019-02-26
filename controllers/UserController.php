@@ -56,10 +56,6 @@ class UserController extends Controller
         
         $keywords = rtrim($keywords,'|');
 
-/*echo '<pre>';
-echo Yii::$app->params['searchUser'] . '?keyword=' . $keywords;
-die();*/
-
         // GET request to api
         $response = $curl->get(Yii::$app->params['searchUser'] . '?keyword=' . $keywords);
         $records = json_decode($response, true);
@@ -215,7 +211,6 @@ die();*/
 
             return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         };
-        //return $this->redirect(['index']);
     }
 
     /**
