@@ -53,7 +53,6 @@ class Task extends \yii\db\ActiveRecord
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::className(), 'targetAttribute' => ['status_id' => 'id']],
-            [['estimated_points'], 'startValue'],
         ];
     }
 
@@ -114,12 +113,5 @@ class Task extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(Status::className(), ['id' => 'status_id']);
-    }
-
-    public function startValue($attribute)
-    {
-        if($attribute < 0){
-            $this->addError($attribute, 'Please provide a value that is more than zero');
-        }
     }
 }

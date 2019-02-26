@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use linslin\yii2\curl;
 use app\models\User;
-use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,22 +60,35 @@ class UserController extends Controller
         $records = json_decode($response, true);
 
         foreach($records as $users){
-            foreach($users as $user){
+            if($users == 'No users found.') {
+                $results = $users;
+                break;
+            }
+
+            foreach ($users as $user) {
                 $results[] = $user;
             }
         }
 
-        $dataProvider = new ArrayDataProvider([
-            'key' => 'id',
-            'allModels' => $results,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'attributes' => ['id', 'name', 'last_name','team_name','username'],
-            ],
-        ]);
-        
+        if(is_array($results)) {
+            Yii::$app->view->params['resultData'] = true;
+            $dataProvider = new ArrayDataProvider([
+                'key' => 'id',
+                'allModels' => $results,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+                'sort' => [
+                    'attributes' => ['id', 'name', 'last_name','team_name','username'],
+                ],
+            ]);
+        } else {
+            $data['result'] = $results;
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => $data,
+            ]);
+        }
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -122,8 +134,6 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         Yii::$app->view->params['editing'] = false;
 
         //Init curl
@@ -251,6 +261,9 @@ class UserController extends Controller
         return $list;
     }
 
+    /*
+     * Renders view in modal through ajax
+     */
     public function actionSearch()
     {
         $model = new User(['scenario' => User::SCENARIO_SEARCH]);

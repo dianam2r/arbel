@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use linslin\yii2\curl;
 use app\models\Task;
-use app\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -100,8 +99,6 @@ class TaskController extends Controller
     public function actionSave()
     {
         $model = new Task();
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         //Init curl
         $curl = new curl\Curl();
@@ -152,23 +149,36 @@ class TaskController extends Controller
         $response = $curl->get(Yii::$app->params['searchTask'] . '?keyword=' . $keywords);
         $records = json_decode($response, true);
 
-        foreach($records as $tasks){
-            foreach($tasks as $task){
+        foreach ($records as $tasks) {
+            if($tasks == 'No tasks found.') {
+                $results = $tasks;
+                break;
+            }
+
+            foreach ($tasks as $task) {
                 $results[] = $task;
             }
         }
 
-        $dataProvider = new ArrayDataProvider([
-            'key' => 'id',
-            'allModels' => $results,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'attributes' => ['id', 'title', 'description','estimated_points','assigned_to', 'task_status'],
-            ],
-        ]);
-        
+        if(is_array($results)) {
+            Yii::$app->view->params['resultData'] = true;
+            $dataProvider = new ArrayDataProvider([
+                'key' => 'id',
+                'allModels' => $results,
+                'pagination' => [
+                    'pageSize' => 15,
+                ],
+                'sort' => [
+                    'attributes' => ['id', 'title', 'description','estimated_points','assigned_to', 'task_status'],
+                ],
+            ]);
+        } else {
+            $data['result'] = $results;
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => $data,
+            ]);
+        }
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -255,6 +265,9 @@ class TaskController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /*
+     * Renders view in modal through ajax
+     */
     public function actionSearch()
     {
         $model = new Task(['scenario' => Task::SCENARIO_SEARCH]);
