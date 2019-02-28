@@ -66,8 +66,12 @@ You can then access the application through the following URL:
 http://localhost/arbel/web/
 ~~~
 
-To enter development mode, open a terminal and within the application directory type this command
+Note: if previous step didn't work, open a terminal and within the application directory type this command
 
 ```
 php yii serve
 ```
+
+If you have followed the previous steps, to log into the application there are to users from the start. Same password as the username, they are:
+- dianamar
+- arbel_demo
