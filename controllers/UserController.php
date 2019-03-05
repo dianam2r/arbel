@@ -151,10 +151,7 @@ class UserController extends Controller
                 ]))
                 ->post(Yii::$app->params['createUser']);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         }
 
         return $this->renderAjax('create', [
